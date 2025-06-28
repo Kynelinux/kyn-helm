@@ -54,19 +54,22 @@
         fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vRPeOHz_lYh0s1_ZoiQ5ruNz2wYBPFqDiCXbxzUqgDb5qsd6ZSBws4_xqCKfbhkxTEujqOy1vKrgGHE/pub?gid=23151082&single=true&output=csv')
             .then(response => response.text())
             .then(data => {
-                const rows = data.split('\n').slice(1); // Remove header row
+                const rows = data.split('\n').slice(1); // Skip header row
                 const tableBody = document.querySelector('#helmet-table tbody');
 
                 rows.forEach(row => {
                     const cols = row.split(',');
                     if (cols.length >= 5) {
                         const tr = document.createElement('tr');
-                        const imgCell = `<td><img src="${cols[0].trim()}" alt="helmet"></td>`;
-                        const nameCell = `<td>${cols[1]}</td>`;
-                        const armorCell = `<td>${cols[2]}</td>`;
-                        const statsCell = `<td>${cols[3]}</td>`;
-                        const droppedCell = `<td>${cols[4]}</td>`;
-                        tr.innerHTML = imgCell + nameCell + armorCell + statsCell + droppedCell;
+                        const imgURL = cols[0].trim();
+                        const imgTag = imgURL.startsWith('http') ? `<img src="${imgURL}" alt="helmet">` : imgURL;
+                        tr.innerHTML = `
+                            <td>${imgTag}</td>
+                            <td>${cols[1]}</td>
+                            <td>${cols[2]}</td>
+                            <td>${cols[3]}</td>
+                            <td>${cols[4]}</td>
+                        `;
                         tableBody.appendChild(tr);
                     }
                 });
