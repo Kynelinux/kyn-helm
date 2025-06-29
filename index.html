@@ -2,78 +2,83 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Helmet Database</title>
-    <style>
-        body {
-            background-color: #0f1417;
-            font-family: Arial, sans-serif;
-            color: white;
-        }
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            background-color: #1b1f22;
-        }
-        th, td {
-            border: 1px solid #444;
-            padding: 10px;
-            text-align: center;
-            vertical-align: middle;
-        }
-        th {
-            background-color: #2a2f33;
-        }
-        tr:nth-child(even) {
-            background-color: #1e2226;
-        }
-        img {
-            max-width: 32px;
-            max-height: 32px;
-        }
-        h2 {
-            text-align: center;
-            color: white;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Helmet Database</title>
+  <style>
+    body {
+      background-color: #0f1c24;
+      font-family: Arial, sans-serif;
+      color: white;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #1e2b33;
+    }
+    th, td {
+      border: 1px solid #444;
+      padding: 8px;
+      text-align: left;
+      vertical-align: top;
+      word-wrap: break-word;
+      max-width: 200px;
+    }
+    th {
+      background-color: #222;
+      color: #fff;
+    }
+    img {
+      max-height: 32px;
+    }
+    h2 {
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
-    <h2>Helmet Database</h2>
-    <div id="table-container">Loading...</div>
+  <h2>Helmet Database</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Image</th>
+        <th>Name</th>
+        <th>Armor</th>
+        <th>Stats</th>
+        <th>Dropped By / Sold By</th>
+      </tr>
+    </thead>
+    <tbody id="helmet-table-body">
+      <!-- Data will be inserted here -->
+    </tbody>
+  </table>
 
-    <script>
-        const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRPeOHz_lYh0s1_ZoiQ5ruNz2wYBPFqDiCXbxzUqgDb5qsd6ZSBws4_xqCKfbhkxTEujqOy1vKrgGHE/pub?gid=932525004&single=true&output=csv";
+  <script>
+    fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vRPeOHz_lYh0s1_ZoiQ5ruNz2wYBPFqDiCXbxzUqgDb5qsd6ZSBws4_xqCKfbhkxTEujqOy1vKrgGHE/pub?gid=932525004&single=true&output=csv")
+      .then(response => response.text())
+      .then(data => {
+        const rows = data.trim().split("\n").map(row => row.split(","));
+        const tbody = document.getElementById("helmet-table-body");
 
-        fetch(csvUrl)
-            .then(response => response.text())
-            .then(csv => {
-                const rows = csv.trim().split("\n").map(row => row.split(","));
-                const table = document.createElement("table");
+        rows.slice(1).forEach(cols => {
+          const tr = document.createElement("tr");
 
-                rows.forEach((row, rowIndex) => {
-                    const tr = document.createElement("tr");
-                    row.forEach((cell, colIndex) => {
-                        const cellElement = rowIndex === 0 ? document.createElement("th") : document.createElement("td");
-                        if (colIndex === 0 && rowIndex !== 0) {
-                            const img = document.createElement("img");
-                            img.src = cell.trim();
-                            img.alt = "helmet";
-                            cellElement.appendChild(img);
-                        } else {
-                            cellElement.textContent = cell.trim();
-                        }
-                        tr.appendChild(cellElement);
-                    });
-                    table.appendChild(tr);
-                });
+          const imgCell = document.createElement("td");
+          const img = document.createElement("img");
+          img.src = cols[0];
+          img.alt = "helmet";
+          img.onerror = () => img.style.display = "none";
+          imgCell.appendChild(img);
+          tr.appendChild(imgCell);
 
-                document.getElementById("table-container").innerHTML = "";
-                document.getElementById("table-container").appendChild(table);
-            })
-            .catch(error => {
-                document.getElementById("table-container").innerText = "Failed to load data.";
-                console.error("Error fetching CSV:", error);
-            });
-    </script>
+          cols.slice(1).forEach(text => {
+            const td = document.createElement("td");
+            td.textContent = text;
+            tr.appendChild(td);
+          });
+
+          tbody.appendChild(tr);
+        });
+      });
+  </script>
 </body>
 </html>
