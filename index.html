@@ -2,83 +2,83 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Helmet Database</title>
-  <style>
-    body {
-      background-color: #0f1c24;
-      font-family: Arial, sans-serif;
-      color: white;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background-color: #1e2b33;
-    }
-    th, td {
-      border: 1px solid #444;
-      padding: 8px;
-      text-align: left;
-      vertical-align: top;
-      word-wrap: break-word;
-      max-width: 200px;
-    }
-    th {
-      background-color: #222;
-      color: #fff;
-    }
-    img {
-      max-height: 32px;
-    }
-    h2 {
-      text-align: center;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>Helmet Database</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1a1a1a;
+            color: #f1f1f1;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #ffffff;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #2b2b2b;
+        }
+        th, td {
+            border: 1px solid #444;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #333;
+        }
+        img {
+            max-height: 40px;
+        }
+        tr:nth-child(even) {
+            background-color: #242424;
+        }
+    </style>
 </head>
 <body>
-  <h2>Helmet Database</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Image</th>
-        <th>Name</th>
-        <th>Armor</th>
-        <th>Stats</th>
-        <th>Dropped By / Sold By</th>
-      </tr>
-    </thead>
-    <tbody id="helmet-table-body">
-      <!-- Data will be inserted here -->
-    </tbody>
-  </table>
+    <h1>Helmet Database</h1>
+    <table id="helmet-table">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Armor</th>
+                <th>Stats</th>
+                <th>Dropped By / Sold By</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Data will be inserted here -->
+        </tbody>
+    </table>
 
-  <script>
-    fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vRPeOHz_lYh0s1_ZoiQ5ruNz2wYBPFqDiCXbxzUqgDb5qsd6ZSBws4_xqCKfbhkxTEujqOy1vKrgGHE/pub?gid=932525004&single=true&output=csv")
-      .then(response => response.text())
-      .then(data => {
-        const rows = data.trim().split("\n").map(row => row.split(","));
-        const tbody = document.getElementById("helmet-table-body");
+    <script>
+        const sheetUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRPeOHz_lYh0s1_ZoiQ5ruNz2wYBPFqDiCXbxzUqgDb5qsd6ZSBws4_xqCKfbhkxTEujqOy1vKrgGHE/pub?gid=932525004&single=true&output=csv";
 
-        rows.slice(1).forEach(cols => {
-          const tr = document.createElement("tr");
+        fetch(sheetUrl)
+            .then(response => response.text())
+            .then(csv => {
+                const rows = csv.trim().split("\n").map(row => row.split(","));
+                const tbody = document.querySelector("#helmet-table tbody");
 
-          const imgCell = document.createElement("td");
-          const img = document.createElement("img");
-          img.src = cols[0];
-          img.alt = "helmet";
-          img.onerror = () => img.style.display = "none";
-          imgCell.appendChild(img);
-          tr.appendChild(imgCell);
-
-          cols.slice(1).forEach(text => {
-            const td = document.createElement("td");
-            td.textContent = text;
-            tr.appendChild(td);
-          });
-
-          tbody.appendChild(tr);
-        });
-      });
-  </script>
+                // Skip header row
+                for (let i = 1; i < rows.length; i++) {
+                    const [imageUrl, name, armor, stats, droppedBy] = rows[i];
+                    const tr = document.createElement("tr");
+                    tr.innerHTML = `
+                        <td><img src="${imageUrl}" alt="helmet"></td>
+                        <td>${name}</td>
+                        <td>${armor}</td>
+                        <td>${stats}</td>
+                        <td>${droppedBy}</td>
+                    `;
+                    tbody.appendChild(tr);
+                }
+            })
+            .catch(error => {
+                console.error("Error fetching CSV:", error);
+            });
+    </script>
 </body>
 </html>
