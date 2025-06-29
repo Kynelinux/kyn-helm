@@ -2,86 +2,51 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Helmet Database</title>
-  <meta charset="UTF-8" />
-  <style>
-    body {
-      background-color: #111;
-      color: white;
-      font-family: Arial, sans-serif;
-    }
-    h1 {
-      text-align: center;
-    }
-    th, td {
-      color: white;
-      border: 1px solid #444;
-      padding: 6px;
-      white-space: normal;
-      word-wrap: break-word;
-      max-width: 200px;
-    }
-    table {
-      border-collapse: collapse;
-      width: 100%;
-    }
-    thead tr {
-      background-color: #222;
-    }
-    tbody tr:nth-child(even) {
-      background-color: #1a1a1a;
-    }
-    tbody tr:nth-child(odd) {
-      background-color: #000;
-    }
-    img {
-      max-height: 32px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>Helmet Database</title>
+    <style>
+        body {
+            background-color: #111;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        h2 {
+            text-align: center;
+            margin-top: 20px;
+        }
+        table {
+            width: 95%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+        th, td {
+            border: 1px solid #333;
+            padding: 10px;
+            text-align: center;
+            vertical-align: middle;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+        }
+        th {
+            background-color: #222;
+        }
+        tr:nth-child(even) {
+            background-color: #1c1c1c;
+        }
+        tr:nth-child(odd) {
+            background-color: #000;
+        }
+        img {
+            height: 32px;
+        }
+    </style>
 </head>
 <body>
-  <h1>Helmet Database</h1>
-  <div id="table-container">Loading...</div>
-
-  <script>
-    fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vRPeOHz_lYh0s1_ZoiQ5ruNz2wYBPFqDiCXbxzUqgDb5qsd6ZSBws4_xqCKfbhkxTEujqOy1vKrgGHE/pub?gid=932525004&single=true&output=csv")
-      .then(response => response.text())
-      .then(data => {
-        const rows = data.trim().split("\n").map(row => row.split(","));
-        let tableHTML = "<table><thead><tr>";
-        rows[0].forEach(header => {
-          tableHTML += `<th>${header.trim()}</th>`;
-        });
-        tableHTML += "</tr></thead><tbody>";
-
-        for (let i = 1; i < rows.length; i++) {
-          const row = rows[i];
-          if (row.every(cell => cell.trim() === "")) continue;
-
-          const isSeparator = row[0].trim().toLowerCase() === "separator" && row.slice(1).every(cell => cell.trim() === "");
-          if (isSeparator) {
-            tableHTML += `<tr><td colspan="${rows[0].length}" style="background:black;height:5px;padding:0;"></td></tr>`;
-            continue;
-          }
-
-          tableHTML += "<tr>";
-          row.forEach((cell, idx) => {
-            if (idx === 0 && cell.trim().startsWith("http")) {
-              tableHTML += `<td><img src="${cell.trim()}" alt="image"></td>`;
-            } else {
-              tableHTML += `<td>${cell.trim()}</td>`;
-            }
-          });
-          tableHTML += "</tr>";
-        }
-
-        tableHTML += "</tbody></table>";
-        document.getElementById("table-container").innerHTML = tableHTML;
-      })
-      .catch(error => {
-        document.getElementById("table-container").innerHTML = "Error loading data";
-        console.error("CSV fetch error:", error);
-      });
-  </script>
+    <h2>Helmet Database</h2>
+    <table>
+        <tr>
+<th>ITEM</th><th>NAME</th><th>Damage</th><th>Attack Speed</th><th>Range</th><th>Defense</th><th>Size</th><th>Weight</th><th>Attributes</th></tr><tr><td><img src="https://static.wikia.nocookie.net/apogea/images/f/fa/Wooden_staff.png"></td><td>Wooden Staff</td><td>5</td><td>2</td><td>32</td><td>nan</td><td>8/10</td><td>30oz</td><td>nan</td></tr><tr><td><img src="https://static.wikia.nocookie.net/apogea/images/b/bf/Staff1.png"></td><td>Crystal Staff</td><td>10</td><td>1</td><td>37</td><td>nan</td><td>8/10</td><td>20oz</td><td>nan</td></tr><tr><td><img src="https://static.wikia.nocookie.net/apogea/images/f/fa/Staff4.png"></td><td>Ancient Staff</td><td>12</td><td>Need info</td><td>47</td><td>nan</td><td>8/10</td><td>30oz</td><td>-2 ability, 20 mana, 2 magic</td></tr><tr><td><img src="https://static.wikia.nocookie.net/apogea/images/1/14/Staff2.png"></td><td>Unholy Staff</td><td>Need info</td><td>Need info</td><td>Need info</td><td>Need info</td><td>Need Info</td><td>Need info</td><td>nan</td></tr><tr><td><img src="https://static.wikia.nocookie.net/apogea/images/0/03/Orb_blue.png"></td><td>Orb</td><td>Need info</td><td>nan</td><td>nan</td><td>2</td><td>2/10</td><td>19oz</td><td>2 magic</td></tr><tr><td><img src="https://static.wikia.nocookie.net/apogea/images/f/f5/Orb_green.png"></td><td>Green Orb</td><td>3</td><td>nan</td><td>nan</td><td>3</td><td>2/10</td><td>27oz</td><td>3 magic, 25 HP, 25 mana</td></tr><tr><td><img src="https://static.wikia.nocookie.net/apogea/images/5/5b/Orb_red.png"></td><td>Red Orb</td><td>10</td><td>nan</td><td>nan</td><td>3</td><td>2/10</td><td>21oz</td><td>5 ability, -75 HP</td></tr><tr><td><img src="https://static.wikia.nocookie.net/apogea/images/0/0e/SnakeOrb.png"></td><td>Snake Orb</td><td>Need info</td><td>Need info</td><td>Need info</td><td>Need info</td><td>2/10</td><td>Need info</td><td>78 mana, 2 def, 3 magic</td></tr><tr><td><img src="https://static.wikia.nocookie.net/apogea/images/4/4e/Staff3.png"></td><td>Stone Wand</td><td>15</td><td>3</td><td>27</td><td>nan</td><td>8/10</td><td>50oz</td><td>nan</td></tr>
+    </table>
 </body>
 </html>
