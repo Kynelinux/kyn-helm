@@ -6,142 +6,74 @@
     <title>Helmet Database</title>
     <style>
         body {
-            background-color: #111;
+            background-color: #0f1417;
             font-family: Arial, sans-serif;
             color: white;
         }
         table {
             border-collapse: collapse;
             width: 100%;
-            margin: 20px auto;
+            background-color: #1b1f22;
         }
         th, td {
             border: 1px solid #444;
-            padding: 8px;
+            padding: 10px;
             text-align: center;
+            vertical-align: middle;
         }
         th {
-            background-color: #222;
-            color: #fff;
+            background-color: #2a2f33;
         }
         tr:nth-child(even) {
-            background-color: #1b1b1b;
+            background-color: #1e2226;
         }
-        tr:nth-child(odd) {
-            background-color: #2a2a2a;
+        img {
+            max-width: 32px;
+            max-height: 32px;
         }
         h2 {
             text-align: center;
             color: white;
-            margin-top: 20px;
         }
     </style>
 </head>
 <body>
     <h2>Helmet Database</h2>
-    <table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th>Item</th>
-      <th>Name</th>
-      <th>Armor</th>
-      <th>Stats</th>
-      <th>Droped By / Sold By</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><img src="https://static.wikia.nocookie.net/apogea/images/2/2d/Leather_helmet1.png" width="32" height="32"></td>
-      <td>Leather Bascinet</td>
-      <td>1.0</td>
-      <td>NaN</td>
-      <td>Goblin</td>
-    </tr>
-    <tr>
-      <td><img src="https://static.wikia.nocookie.net/apogea/images/7/74/Kettle_helmet.png/" width="32" height="32"></td>
-      <td>Kettle Helmet</td>
-      <td>3.0</td>
-      <td>NaN</td>
-      <td>Skeleton</td>
-    </tr>
-    <tr>
-      <td><img src="https://static.wikia.nocookie.net/apogea/images/b/b7/Spanghen_helmet.png" width="32" height="32"></td>
-      <td>Spangenhelm</td>
-      <td>5.0</td>
-      <td>NaN</td>
-      <td>Grizzly Bear</td>
-    </tr>
-    <tr>
-      <td><img src="https://static.wikia.nocookie.net/apogea/images/5/5c/Leather_hood.png" width="32" height="32"></td>
-      <td>Leather Coif</td>
-      <td>4.0</td>
-      <td>3 damage</td>
-      <td>Grizzly Bear</td>
-    </tr>
-    <tr>
-      <td><img src="https://static.wikia.nocookie.net/apogea/images/a/a9/Helmet3.png" width="32" height="32"></td>
-      <td>Silver Mask</td>
-      <td>1.0</td>
-      <td>10 mana -5 HP</td>
-      <td>Capozzi the Bandit</td>
-    </tr>
-    <tr>
-      <td><img src="https://static.wikia.nocookie.net/apogea/images/f/f3/Mage_hood.png" width="32" height="32"></td>
-      <td>Dark Hood</td>
-      <td>2.0</td>
-      <td>3 ability -10 HP</td>
-      <td>Occultist Acolyte / Black Market</td>
-    </tr>
-    <tr>
-      <td><img src="https://static.wikia.nocookie.net/apogea/images/e/e3/Helme5.png" width="32" height="32"></td>
-      <td>Burlap Hat</td>
-      <td>1.0</td>
-      <td>50 mana -2 magic</td>
-      <td>Need info</td>
-    </tr>
-    <tr>
-      <td><img src="https://static.wikia.nocookie.net/apogea/images/4/46/Druid_hat.png" width="32" height="32"></td>
-      <td>Druid Hat</td>
-      <td>1.0</td>
-      <td>1 magic 40 HP</td>
-      <td>Need info</td>
-    </tr>
-    <tr>
-      <td><img src="https://static.wikia.nocookie.net/apogea/images/1/1f/Mage_hat1.png" width="32" height="32"></td>
-      <td>Magician Hat</td>
-      <td>2.0</td>
-      <td>3 Magic</td>
-      <td>Need info</td>
-    </tr>
-    <tr>
-      <td><img src="https://static.wikia.nocookie.net/apogea/images/6/6f/Mage_hat2.png" width="32" height="32"></td>
-      <td>Wizard Hat</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <td><img src="https://static.wikia.nocookie.net/apogea/images/9/96/Helmet4.png" width="32" height="32"></td>
-      <td>Quoki Headgear</td>
-      <td>NaN</td>
-      <td>1AS, -25 HP</td>
-      <td>Conquest Fowler</td>
-    </tr>
-    <tr>
-      <td><img src="https://static.wikia.nocookie.net/apogea/images/d/db/Helmet1.png" width="32" height="32"></td>
-      <td>Royal Helm</td>
-      <td>7.0</td>
-      <td>3 ability</td>
-      <td>Need info</td>
-    </tr>
-    <tr>
-      <td><img src="https://static.wikia.nocookie.net/apogea/images/c/c2/WolfHelmet.png" width="32" height="32"></td>
-      <td>Wolf Helm</td>
-      <td>2.0</td>
-      <td>NaN</td>
-      <td>quest reward</td>
-    </tr>
-  </tbody>
-</table>
+    <div id="table-container">Loading...</div>
+
+    <script>
+        const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRPeOHz_lYh0s1_ZoiQ5ruNz2wYBPFqDiCXbxzUqgDb5qsd6ZSBws4_xqCKfbhkxTEujqOy1vKrgGHE/pub?gid=932525004&single=true&output=csv";
+
+        fetch(csvUrl)
+            .then(response => response.text())
+            .then(csv => {
+                const rows = csv.trim().split("\n").map(row => row.split(","));
+                const table = document.createElement("table");
+
+                rows.forEach((row, rowIndex) => {
+                    const tr = document.createElement("tr");
+                    row.forEach((cell, colIndex) => {
+                        const cellElement = rowIndex === 0 ? document.createElement("th") : document.createElement("td");
+                        if (colIndex === 0 && rowIndex !== 0) {
+                            const img = document.createElement("img");
+                            img.src = cell.trim();
+                            img.alt = "helmet";
+                            cellElement.appendChild(img);
+                        } else {
+                            cellElement.textContent = cell.trim();
+                        }
+                        tr.appendChild(cellElement);
+                    });
+                    table.appendChild(tr);
+                });
+
+                document.getElementById("table-container").innerHTML = "";
+                document.getElementById("table-container").appendChild(table);
+            })
+            .catch(error => {
+                document.getElementById("table-container").innerText = "Failed to load data.";
+                console.error("Error fetching CSV:", error);
+            });
+    </script>
 </body>
 </html>
