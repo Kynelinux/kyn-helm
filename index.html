@@ -1,33 +1,81 @@
 
-<style>
-  body {
-    background-color: #111;
-    color: white;
-    font-family: Arial, sans-serif;
-  }
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: #222;
-  }
-  th, td {
-    border: 1px solid #444;
-    padding: 8px;
-    text-align: left;
-    vertical-align: middle;
-  }
-  th {
-    background-color: #333;
-  }
-  tr:nth-child(even) {
-    background-color: #2a2a2a;
-  }
-  tr:nth-child(odd) {
-    background-color: #1c1c1c;
-  }
-  img {
-    max-width: 40px;
-    max-height: 40px;
-  }
-</style>
-<h2>Helmet Database</h2><table><thead><tr><th>ITEM</th><th>NAME</th><th>ARMOR</th><th>STATS</th><th>DROPED BY / SOLD BY</th></tr></thead><tbody><tr><td><img src='https://static.wikia.nocookie.net/apogea/images/2/2d/Leather_helmet1.png' alt='image'></td><td>Leather Bascinet</td><td>1.0</td><td>nan</td><td>Goblin</td></tr><tr><td><img src='https://static.wikia.nocookie.net/apogea/images/7/74/Kettle_helmet.png/' alt='image'></td><td>Kettle Helmet</td><td>3.0</td><td>nan</td><td>Skeleton</td></tr><tr><td><img src='https://static.wikia.nocookie.net/apogea/images/b/b7/Spanghen_helmet.png' alt='image'></td><td>Spangenhelm</td><td>5.0</td><td>nan</td><td>Grizzly Bear</td></tr><tr><td><img src='https://static.wikia.nocookie.net/apogea/images/5/5c/Leather_hood.png' alt='image'></td><td>Leather Coif</td><td>4.0</td><td>3 damage</td><td>Grizzly Bear</td></tr><tr><td><img src='https://static.wikia.nocookie.net/apogea/images/a/a9/Helmet3.png' alt='image'></td><td>Silver Mask</td><td>1.0</td><td>10 mana -5 HP</td><td>Capozzi the Bandit</td></tr><tr><td><img src='https://static.wikia.nocookie.net/apogea/images/f/f3/Mage_hood.png' alt='image'></td><td>Dark Hood</td><td>2.0</td><td>3 ability -10 HP</td><td>Occultist Acolyte / Black Market</td></tr><tr><td><img src='https://static.wikia.nocookie.net/apogea/images/e/e3/Helme5.png' alt='image'></td><td>Burlap Hat</td><td>1.0</td><td>50 mana -2 magic</td><td>Need info</td></tr><tr><td><img src='https://static.wikia.nocookie.net/apogea/images/4/46/Druid_hat.png' alt='image'></td><td>Druid Hat</td><td>1.0</td><td>1 magic 40 HP</td><td>Need info</td></tr><tr><td><img src='https://static.wikia.nocookie.net/apogea/images/1/1f/Mage_hat1.png' alt='image'></td><td>Magician Hat</td><td>2.0</td><td>3 Magic</td><td>Need info</td></tr><tr><td><img src='https://static.wikia.nocookie.net/apogea/images/6/6f/Mage_hat2.png' alt='image'></td><td>Wizard Hat</td><td>nan</td><td>nan</td><td>nan</td></tr><tr><td><img src='https://static.wikia.nocookie.net/apogea/images/9/96/Helmet4.png' alt='image'></td><td>Quoki Headgear</td><td>nan</td><td>1AS, -25 HP</td><td>Conquest Fowler</td></tr><tr><td><img src='https://static.wikia.nocookie.net/apogea/images/d/db/Helmet1.png' alt='image'></td><td>Royal Helm</td><td>7.0</td><td>3 ability</td><td>Need info</td></tr><tr><td><img src='https://static.wikia.nocookie.net/apogea/images/c/c2/WolfHelmet.png' alt='image'></td><td>Wolf Helm</td><td>2.0</td><td>nan</td><td>quest reward</td></tr></tbody></table>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Helmets</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #1a1a1a;
+      color: #f1f1f1;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #ffffff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #2b2b2b;
+    }
+    th, td {
+      border: 1px solid #444;
+      padding: 10px;
+      text-align: center;
+      vertical-align: middle;
+    }
+    th {
+      background-color: #333;
+    }
+    tr:nth-child(even) {
+      background-color: #242424;
+    }
+    img {
+      max-height: 40px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Helmet Database</h1>
+  <div id="table-container">Loading...</div>
+
+  <script>
+    fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vRPeOHz_lYh0s1_ZoiQ5ruNz2wYBPFqDiCXbxzUqgDb5qsd6ZSBws4_xqCKfbhkxTEujqOy1vKrgGHE/pub?gid=932525004&single=true&output=csv")
+      .then(response => response.text())
+      .then(data => {
+        const rows = data.split("\n").map(row => row.split(","));
+        let tableHTML = "<table><thead><tr>";
+
+        rows[0].forEach(header => {
+          tableHTML += `<th>${header}</th>`;
+        });
+
+        tableHTML += "</tr></thead><tbody>";
+
+        for (let i = 1; i < rows.length; i++) {
+          const row = rows[i];
+          if (row.every(cell => cell.trim() === "")) continue;
+          tableHTML += "<tr>";
+          row.forEach((cell, index) => {
+            const trimmed = cell.trim();
+            if (index === 0 && trimmed.startsWith("http")) {
+              tableHTML += `<td><img src="\${trimmed}" alt="helmet image"></td>`;
+            } else {
+              tableHTML += `<td>\${trimmed}</td>`;
+            }
+          });
+          tableHTML += "</tr>";
+        }
+
+        tableHTML += "</tbody></table>";
+        document.getElementById("table-container").innerHTML = tableHTML;
+      })
+      .catch(error => {
+        document.getElementById("table-container").innerText = "Error loading data";
+        console.error("CSV load error:", error);
+      });
+  </script>
+</body>
+</html>
