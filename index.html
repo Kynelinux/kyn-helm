@@ -1,20 +1,19 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Helmet Database</title>
-    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
     <style>
         body {
             background-color: #111;
-            color: white;
             font-family: Arial, sans-serif;
+            color: white;
         }
         table {
             border-collapse: collapse;
-            width: 90%;
-            margin: 30px auto;
-            background-color: #222;
+            width: 100%;
+            margin: 20px auto;
         }
         th, td {
             border: 1px solid #444;
@@ -22,65 +21,127 @@
             text-align: center;
         }
         th {
-            background-color: #333;
+            background-color: #222;
             color: #fff;
         }
         tr:nth-child(even) {
-            background-color: #1a1a1a;
+            background-color: #1b1b1b;
         }
-        img {
-            width: 32px;
-            height: 32px;
+        tr:nth-child(odd) {
+            background-color: #2a2a2a;
         }
-        h1 {
+        h2 {
             text-align: center;
+            color: white;
             margin-top: 20px;
         }
     </style>
 </head>
 <body>
-    <h1>Helmet Database</h1>
-    <table id="data-table">
-        <thead>
-            <tr id="header-row"></tr>
-        </thead>
-        <tbody id="table-body"></tbody>
-    </table>
-    <script>
-        Papa.parse("https://docs.google.com/spreadsheets/d/e/2PACX-1vRPeOHz_lYh0s1_ZoiQ5ruNz2wYBPFqDiCXbxzUqgDb5qsd6ZSBws4_xqCKfbhkxTEujqOy1vKrgGHE/pub?gid=932525004&single=true&output=csv", {
-            download: true,
-            header: true,
-            complete: function(results) {
-                const data = results.data;
-                const headerRow = document.getElementById("header-row");
-                const tableBody = document.getElementById("table-body");
-
-                if (data.length === 0) return;
-
-                const headers = Object.keys(data[0]);
-                headers.forEach(header => {
-                    const th = document.createElement("th");
-                    th.textContent = header;
-                    headerRow.appendChild(th);
-                });
-
-                data.forEach(row => {
-                    const tr = document.createElement("tr");
-                    headers.forEach(header => {
-                        const td = document.createElement("td");
-                        if (header.toLowerCase().includes("image") && row[header]) {
-                            const img = document.createElement("img");
-                            img.src = row[header];
-                            td.appendChild(img);
-                        } else {
-                            td.textContent = row[header];
-                        }
-                        tr.appendChild(td);
-                    });
-                    tableBody.appendChild(tr);
-                });
-            }
-        });
-    </script>
+    <h2>Helmet Database</h2>
+    <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Item</th>
+      <th>Name</th>
+      <th>Armor</th>
+      <th>Stats</th>
+      <th>Droped By / Sold By</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><img src="https://static.wikia.nocookie.net/apogea/images/2/2d/Leather_helmet1.png" width="32" height="32"></td>
+      <td>Leather Bascinet</td>
+      <td>1.0</td>
+      <td>NaN</td>
+      <td>Goblin</td>
+    </tr>
+    <tr>
+      <td><img src="https://static.wikia.nocookie.net/apogea/images/7/74/Kettle_helmet.png/" width="32" height="32"></td>
+      <td>Kettle Helmet</td>
+      <td>3.0</td>
+      <td>NaN</td>
+      <td>Skeleton</td>
+    </tr>
+    <tr>
+      <td><img src="https://static.wikia.nocookie.net/apogea/images/b/b7/Spanghen_helmet.png" width="32" height="32"></td>
+      <td>Spangenhelm</td>
+      <td>5.0</td>
+      <td>NaN</td>
+      <td>Grizzly Bear</td>
+    </tr>
+    <tr>
+      <td><img src="https://static.wikia.nocookie.net/apogea/images/5/5c/Leather_hood.png" width="32" height="32"></td>
+      <td>Leather Coif</td>
+      <td>4.0</td>
+      <td>3 damage</td>
+      <td>Grizzly Bear</td>
+    </tr>
+    <tr>
+      <td><img src="https://static.wikia.nocookie.net/apogea/images/a/a9/Helmet3.png" width="32" height="32"></td>
+      <td>Silver Mask</td>
+      <td>1.0</td>
+      <td>10 mana -5 HP</td>
+      <td>Capozzi the Bandit</td>
+    </tr>
+    <tr>
+      <td><img src="https://static.wikia.nocookie.net/apogea/images/f/f3/Mage_hood.png" width="32" height="32"></td>
+      <td>Dark Hood</td>
+      <td>2.0</td>
+      <td>3 ability -10 HP</td>
+      <td>Occultist Acolyte / Black Market</td>
+    </tr>
+    <tr>
+      <td><img src="https://static.wikia.nocookie.net/apogea/images/e/e3/Helme5.png" width="32" height="32"></td>
+      <td>Burlap Hat</td>
+      <td>1.0</td>
+      <td>50 mana -2 magic</td>
+      <td>Need info</td>
+    </tr>
+    <tr>
+      <td><img src="https://static.wikia.nocookie.net/apogea/images/4/46/Druid_hat.png" width="32" height="32"></td>
+      <td>Druid Hat</td>
+      <td>1.0</td>
+      <td>1 magic 40 HP</td>
+      <td>Need info</td>
+    </tr>
+    <tr>
+      <td><img src="https://static.wikia.nocookie.net/apogea/images/1/1f/Mage_hat1.png" width="32" height="32"></td>
+      <td>Magician Hat</td>
+      <td>2.0</td>
+      <td>3 Magic</td>
+      <td>Need info</td>
+    </tr>
+    <tr>
+      <td><img src="https://static.wikia.nocookie.net/apogea/images/6/6f/Mage_hat2.png" width="32" height="32"></td>
+      <td>Wizard Hat</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <td><img src="https://static.wikia.nocookie.net/apogea/images/9/96/Helmet4.png" width="32" height="32"></td>
+      <td>Quoki Headgear</td>
+      <td>NaN</td>
+      <td>1AS, -25 HP</td>
+      <td>Conquest Fowler</td>
+    </tr>
+    <tr>
+      <td><img src="https://static.wikia.nocookie.net/apogea/images/d/db/Helmet1.png" width="32" height="32"></td>
+      <td>Royal Helm</td>
+      <td>7.0</td>
+      <td>3 ability</td>
+      <td>Need info</td>
+    </tr>
+    <tr>
+      <td><img src="https://static.wikia.nocookie.net/apogea/images/c/c2/WolfHelmet.png" width="32" height="32"></td>
+      <td>Wolf Helm</td>
+      <td>2.0</td>
+      <td>NaN</td>
+      <td>quest reward</td>
+    </tr>
+  </tbody>
+</table>
 </body>
 </html>
